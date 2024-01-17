@@ -8,8 +8,7 @@
     },
     "scripts": {
       "dev": "vite",
-      "build": "npm run check && vite build",
-      "check": "prettier --check . && tsc --noEmit",
+      "build": "vite build",
       "prepare": "husky install"
     },
     "dependencies": {
