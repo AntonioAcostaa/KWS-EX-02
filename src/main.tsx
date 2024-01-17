@@ -1,5 +1,7 @@
-import react from "react";
-import ReactDom from "react-dom";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { MapApplication } from "./components/application/mapApplication";
 
-const root = ReactDom.createRoot(document.getElementById("root")!);
+const root = ReactDOM.createRoot(document.getElementById("root")!);
 
+root.render(<MapApplication />);
