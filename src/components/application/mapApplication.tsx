@@ -25,19 +25,23 @@ export function MapApplication() {
   ]);
 
   const mapRef = useRef() as MutableRefObject<HTMLDivElement>;
+
+  //Updates the current chosen layer when the state changes
   useEffect(() => {
     map.setLayers(layers);
   }, [layers]);
 
+    //Sets the map target to the div element
   useEffect(() => {
     map.setTarget(mapRef.current);
   }, []);
 
+    //Focuses the map on the user
   function handleFocusUser(e: React.MouseEvent){
     e.preventDefault();
     navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
-        map.getView().animate({center: [longitude, latitude], zoom: 14});
+        map.getView().animate({center: [longitude, latitude], zoom: 18});
     });
 }
 

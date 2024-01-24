@@ -18,3 +18,9 @@ header {
   display: flex;
   gap: 20px;
 }
+
+.kommune-overlay {
+    translate: -50% calc(-50% - 20px);
+    background-color: white;
+    padding: 0.5em;
+}

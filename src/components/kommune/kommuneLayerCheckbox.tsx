@@ -3,13 +3,14 @@ import React, {
     SetStateAction,
     useEffect,
     useMemo,
+    useRef,
     useState,
   } from "react";
   import { Layer } from "ol/layer";
   import VectorLayer from "ol/layer/Vector";
   import VectorSource from "ol/source/Vector";
   import { GeoJSON } from "ol/format";
-  import { Map, MapBrowserEvent } from "ol";
+  import { Map, MapBrowserEvent, Overlay } from "ol";
   
   interface KommuneProperties {
     kommunenummer: string;
@@ -23,15 +24,17 @@ import React, {
     setLayers: Dispatch<SetStateAction<Layer[]>>;
     map: Map;
   }) {
+
     function handleClick(e: MapBrowserEvent<MouseEvent>) {
-      const features = kommuneLayer
+      const clickedKommune = kommuneLayer
         .getSource()
         ?.getFeaturesAtCoordinate(e.coordinate);
-      const firstFeature = features?.length ? features[0] : undefined;
+      const firstFeature = clickedKommune?.length ? clickedKommune[0] : undefined;
       if (firstFeature) {
         const kommuneProperties =
           firstFeature.getProperties() as KommuneProperties;
-        alert(kommuneProperties.navn.find((n) => n.sprak === "nor")!.navn);
+          setSelectedKommune(kommuneProperties);
+          overlay.setPosition(e.coordinate);
       }
     }
     const kommuneLayer = useMemo(
@@ -44,19 +47,32 @@ import React, {
         }),
       [],
     );
+    
     const [checked, setChecked] = useState(false);
+
+    const overlayRef = useRef<HTMLDivElement>(null);
+    const overlay = useMemo(() => new Overlay({}),[])
+    useEffect(() => {
+        overlay.setElement(overlayRef.current!);
+        map.addOverlay(overlay);
+        return () => {
+            map.removeOverlay(overlay);
+        }
+    }, []);
+    const [selectedKommune, setSelectedKommune] = useState<KommuneProperties | undefined>(undefined);
+
     useEffect(() => {
       if (checked) {
         setLayers((old) => [...old, kommuneLayer]);
         map.on("click", handleClick);
-      } else {
+      } return () => {
         setLayers((old) => old.filter((l) => l !== kommuneLayer));
         map.un("click", handleClick)
       }
     }, [checked]);
   
     return (
-      <div>
+      <div className="kommune-layer-checkbox">
         <label>
           <input
             type={"checkbox"}
@@ -65,6 +81,11 @@ import React, {
           />
           {checked ? "Hide" : "Show"} kommuner
         </label>
+        <div className="kommune-overlay" ref={overlayRef}>
+            {selectedKommune && (
+                selectedKommune.navn.find((n) => n.sprak === "nor")!.navn
+            )}
+        </div>
       </div>
     );
   }
