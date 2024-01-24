@@ -31,19 +31,19 @@ export function MapApplication() {
     map.setLayers(layers);
   }, [layers]);
 
-    //Sets the map target to the div element
+  //Sets the map target to the div element
   useEffect(() => {
     map.setTarget(mapRef.current);
   }, []);
 
-    //Focuses the map on the user
-  function handleFocusUser(e: React.MouseEvent){
+  //Focuses the map on the user
+  function handleFocusUser(e: React.MouseEvent) {
     e.preventDefault();
     navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        map.getView().animate({center: [longitude, latitude], zoom: 18});
+      const { latitude, longitude } = position.coords;
+      map.getView().animate({ center: [longitude, latitude], zoom: 18 });
     });
-}
+  }
 
   return (
     <>
@@ -51,8 +51,10 @@ export function MapApplication() {
         <h1>Map Application</h1>
       </header>
       <nav>
-        <KommuneLayerCheckbox setLayers={setLayers} map={map}/>
-        <a href="#" onClick={handleFocusUser}>Focus user</a>
+        <KommuneLayerCheckbox setLayers={setLayers} map={map} />
+        <button onClick={handleFocusUser} className="focus-button">
+          Focus user
+        </button>
       </nav>
       <main ref={mapRef}></main>
     </>

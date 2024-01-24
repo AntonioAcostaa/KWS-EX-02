@@ -1,6 +1,6 @@
 * {
   margin: unset;
-  color: white; 
+  color: white;
 }
 
 #root {
@@ -19,13 +19,35 @@ header {
   display: flex;
   gap: 20px;
   background-color: #0f2033;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.kommune-layer-checkbox {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .kommune-overlay {
-    translate: -50% calc(-50% - 20px);
-    border: 3px solid #0df2d7;
-    border-radius: 7px;
-    background-color: #0f2033;
-    padding: 0.5em;
-    color: white;
+  translate: -50% calc(-50% - 20px);
+  border: 3px solid #0df2d7;
+  border-radius: 7px;
+  background-color: #0f2033;
+  padding: 0.5em;
+  color: white;
+}
+
+.focus-button {
+  background-color: #0f2033;
+  border: 3px solid #0df2d7;
+  border-radius: 7px;
+  color: white;
+  cursor: pointer;
+}
+
+.focus-button:hover {
+  background-color: #0df2d7;
+  border: 3px solid #0f2033;
+  color: #0f2033;
 }
