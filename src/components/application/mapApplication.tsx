@@ -9,7 +9,7 @@ import "./application.css";
 import "ol/ol.css";
 import { KommuneLayerCheckbox } from "../kommune/kommuneLayerCheckbox";
 import { Layer } from "ol/layer";
-import { Button } from '@intility/bifrost-react';
+import { Button } from "@intility/bifrost-react";
 
 useGeographic();
 
@@ -53,9 +53,7 @@ export function MapApplication() {
       </header>
       <nav>
         <KommuneLayerCheckbox setLayers={setLayers} map={map} />
-        <Button onClick={handleFocusUser} >
-          Focus user
-        </Button>
+        <Button onClick={handleFocusUser}>Focus user</Button>
       </nav>
       <main ref={mapRef}></main>
     </>
