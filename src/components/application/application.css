@@ -1,5 +1,6 @@
 * {
   margin: unset;
+  color: white; 
 }
 
 #root {
@@ -17,10 +18,14 @@ header {
   padding: 0.25em;
   display: flex;
   gap: 20px;
+  background-color: #0f2033;
 }
 
 .kommune-overlay {
     translate: -50% calc(-50% - 20px);
-    background-color: white;
+    border: 3px solid #0df2d7;
+    border-radius: 7px;
+    background-color: #0f2033;
     padding: 0.5em;
+    color: white;
 }
