@@ -11,9 +11,9 @@ import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { GeoJSON } from "ol/format";
 import { Map, MapBrowserEvent, Overlay } from "ol";
-import "../styles/sliderButton.css";
 import Stroke from "ol/style/Stroke";
 import Style from "ol/style/Style";
+import { Checkbox } from '@intility/bifrost-react';
 
 interface KommuneProperties {
   kommunenummer: string;
@@ -86,16 +86,8 @@ export function KommuneLayerCheckbox({
   }, [checked]);
 
   return (
-    <div className="kommune-layer-checkbox">
-      <label>{checked ? "Hide" : "Show"} kommuner</label>
-      <label className="switch">
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={(e) => setChecked(e.target.checked)}
-        />
-        <span className="slider round"></span>
-      </label>
+      <div className="kommune-layer-checkbox">
+        <Checkbox button type='switch' label={checked ? "Hide kommuner" : "Show kommuner"} checked={checked} onChange={(e) => setChecked(e.target.checked)}/>
       <div className="kommune-overlay" ref={overlayRef}>
         {selectedKommune &&
           selectedKommune.navn.find((n) => n.sprak === "nor")!.navn}
