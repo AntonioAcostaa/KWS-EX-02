@@ -33,6 +33,14 @@ export function MapApplication() {
     map.setTarget(mapRef.current);
   }, []);
 
+  function handleFocusUser(e: React.MouseEvent){
+    e.preventDefault();
+    navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        map.getView().animate({center: [longitude, latitude], zoom: 14});
+    });
+}
+
   return (
     <>
       <header>
@@ -40,6 +48,7 @@ export function MapApplication() {
       </header>
       <nav>
         <KommuneLayerCheckbox setLayers={setLayers} map={map}/>
+        <a href="#" onClick={handleFocusUser}>Focus user</a>
       </nav>
       <main ref={mapRef}></main>
     </>

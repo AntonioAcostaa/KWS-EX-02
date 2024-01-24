@@ -15,4 +15,6 @@ main {
 nav,
 header {
   padding: 0.25em;
+  display: flex;
+  gap: 20px;
 }
