@@ -4,10 +4,10 @@ import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import { Feature } from "ol";
 
-type KommuneVectorLayer = VectorLayer<VectorSource<KommuneFeature>>;
+type FylkeVectorLayer = VectorLayer<VectorSource<FylkeFeature>>;
 
-interface KommuneProperties {
-  kommunenummer: string;
+interface FylkeProperties {
+  fylkenummer: string;
   navn: Stedsnavn[];
 }
 
@@ -17,20 +17,20 @@ interface Stedsnavn {
   navn: string;
 }
 
-type KommuneFeature = {
-  getProperties(): KommuneProperties;
+type FylkeFeature = {
+  getProperties(): FylkeProperties;
 } & Feature;
 
 function getStedsnavn(navn: Stedsnavn[]) {
   return navn.find((n) => n.sprak === "nor")?.navn;
 }
 
-function useKommuneFeatures() {
+function useFylkeFeatures() {
   const { map, layers } = useContext(MapContext);
   const layer = layers.find(
-    (l) => l.getClassName() === "kommuner",
-  ) as KommuneVectorLayer;
-  const [features, setFeatures] = useState<KommuneFeature[]>();
+    (l) => l.getClassName() === "fylker",
+  ) as FylkeVectorLayer;
+  const [features, setFeatures] = useState<FylkeFeature[]>();
   const [viewExtent, setViewExtent] = useState(
     map.getView().getViewStateAndExtent().extent,
   );
@@ -61,11 +61,11 @@ function useKommuneFeatures() {
     return () => map.getView().un("change", handleViewChange);
   }, [map]);
 
-  return { kommuneLayer: layer, features, visibleFeatures };
+  return { layer, features, visibleFeatures };
 }
 
-export function KommuneASide() {
-  const { visibleFeatures } = useKommuneFeatures();
+export function FylkeASide() {
+  const { visibleFeatures } = useFylkeFeatures();
 
   return (
     <aside className={visibleFeatures?.length ? "visible" : "hidden"}>

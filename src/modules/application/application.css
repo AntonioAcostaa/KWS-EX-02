@@ -9,10 +9,6 @@
   height: 100dvh;
 }
 
-main {
-  background-color: lightblue;
-}
-
 nav,
 header {
   padding: 0.25em;
@@ -50,4 +46,28 @@ header {
   background-color: #0df2d7;
   border: 3px solid #0f2033;
   color: #0f2033;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    background-color: #243242;
+}
+
+main aside {
+  display: grid;
+  grid-template-columns: 0;
+  transition: grid-template-columns 0.5s ease-in-out;
+  overflow-x: clip;
+  max-height: calc(200vh - 100px);
+  overflow-y: auto;
+}
+  
+main aside.visible {
+  grid-template-columns: auto;
+}
+  
+main aside > * {
+  padding: 0.5rem;
+  min-width: 25ch;
 }

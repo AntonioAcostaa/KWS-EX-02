@@ -1,24 +1,18 @@
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 
-import { Map, View } from "ol";
 import TileLayer from "ol/layer/Tile";
 import { OSM } from "ol/source";
-import { useGeographic } from "ol/proj";
 
 import "./application.css";
 import "ol/ol.css";
 import { KommuneLayerCheckbox } from "../kommune/kommuneLayerCheckbox";
 import { Layer } from "ol/layer";
 import { Button } from "@intility/bifrost-react";
+import { KommuneASide } from "../kommune/KommuneASide";
+import { map, MapContext } from "../map/mapContext";
+import { FylkeLayerCheckbox } from "../fylke/fylkeLayerCheckbox";
+import { FylkeASide } from "../fylke/fylkeASide";
 
-useGeographic();
-
-const map = new Map({
-  view: new View({
-    center: [10, 59],
-    zoom: 8,
-  }),
-});
 
 export function MapApplication() {
   const [layers, setLayers] = useState<Layer[]>([
@@ -47,15 +41,20 @@ export function MapApplication() {
   }
 
   return (
-    <>
+    <MapContext.Provider value={{ map, layers, setLayers }}>
       <header>
         <h1>Map Application</h1>
       </header>
       <nav>
-        <KommuneLayerCheckbox setLayers={setLayers} map={map} />
+        <KommuneLayerCheckbox />
+        <FylkeLayerCheckbox />
         <Button onClick={handleFocusUser}>Focus user</Button>
       </nav>
-      <main ref={mapRef}></main>
-    </>
+      <main>
+        <div ref={mapRef}></div>
+        <KommuneASide />
+        <FylkeASide />
+      </main>
+    </MapContext.Provider>
   );
 }

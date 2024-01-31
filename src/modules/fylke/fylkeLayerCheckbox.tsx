@@ -17,41 +17,41 @@ import Style from "ol/style/Style";
 import { Checkbox } from "@intility/bifrost-react";
 import { MapContext } from "../map/mapContext";
 
-interface KommuneProperties {
-  kommunenummer: string;
+interface FylkeProperties {
+  fylkenummer: string;
   navn: { sprak: string; navn: string }[];
 }
 
-export function KommuneLayerCheckbox({
+export function FylkeLayerCheckbox({
 }: {
 }) {
     const { map, setLayers } = useContext(MapContext);
 
   function handleClick(e: MapBrowserEvent<MouseEvent>) {
-    const clickedKommune = kommuneLayer
+    const clickedFylke = fylkeLayer
       .getSource()
       ?.getFeaturesAtCoordinate(e.coordinate);
-    const firstFeature = clickedKommune?.length ? clickedKommune[0] : undefined;
+    const firstFeature = clickedFylke?.length ? clickedFylke[0] : undefined;
     if (firstFeature) {
-      const kommuneProperties =
-        firstFeature.getProperties() as KommuneProperties;
-      setSelectedKommune(kommuneProperties);
+      const fylkeProperties =
+        firstFeature.getProperties() as FylkeProperties;
+      setSelectedFylke(fylkeProperties);
       overlay.setPosition(e.coordinate);
     }
   }
-  const kommuneLayer = useMemo(
+  const fylkeLayer = useMemo(
     () =>
       new VectorLayer({
-        className: "kommuner",
+        className: "fylker",
         source: new VectorSource({
-          url: "/KWS-EX-02/kommuner.json",
+          url: "/KWS-EX-02/fylker.json",
           format: new GeoJSON(),
         }),
       }),
     [],
   );
 
-  kommuneLayer.setStyle(
+  fylkeLayer.setStyle(
     new Style({
       stroke: new Stroke({
         color: "#0f2033",
@@ -72,17 +72,17 @@ export function KommuneLayerCheckbox({
       map.removeOverlay(overlay);
     };
   }, []);
-  const [selectedKommune, setSelectedKommune] = useState<
-    KommuneProperties | undefined
+  const [selectedFylke, setSelectedFylke] = useState<
+    FylkeProperties | undefined
   >(undefined);
 
   useEffect(() => {
     if (checked) {
-      setLayers((old) => [...old, kommuneLayer]);
+      setLayers((old) => [...old, fylkeLayer]);
       map.on("click", handleClick);
     }
     return () => {
-      setLayers((old) => old.filter((l) => l !== kommuneLayer));
+      setLayers((old) => old.filter((l) => l !== fylkeLayer));
       map.un("click", handleClick);
     };
   }, [checked]);
@@ -92,13 +92,13 @@ export function KommuneLayerCheckbox({
       <Checkbox
         button
         type="switch"
-        label={checked ? "Hide kommuner" : "Show kommuner"}
+        label={checked ? "Hide fylker" : "Show fylker"}
         checked={checked}
         onChange={(e) => setChecked(e.target.checked)}
       />
       <div className="kommune-overlay" ref={overlayRef}>
-        {selectedKommune &&
-          selectedKommune.navn.find((n) => n.sprak === "nor")!.navn}
+        {selectedFylke &&
+          selectedFylke.navn.find((n) => n.sprak === "nor")!.navn}
       </div>
     </div>
   );
