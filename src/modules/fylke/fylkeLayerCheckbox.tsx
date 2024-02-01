@@ -22,10 +22,8 @@ interface FylkeProperties {
   navn: { sprak: string; navn: string }[];
 }
 
-export function FylkeLayerCheckbox({
-}: {
-}) {
-    const { map, setLayers } = useContext(MapContext);
+export function FylkeLayerCheckbox({}: {}) {
+  const { map, setLayers } = useContext(MapContext);
 
   function handleClick(e: MapBrowserEvent<MouseEvent>) {
     const clickedFylke = fylkeLayer
@@ -33,8 +31,7 @@ export function FylkeLayerCheckbox({
       ?.getFeaturesAtCoordinate(e.coordinate);
     const firstFeature = clickedFylke?.length ? clickedFylke[0] : undefined;
     if (firstFeature) {
-      const fylkeProperties =
-        firstFeature.getProperties() as FylkeProperties;
+      const fylkeProperties = firstFeature.getProperties() as FylkeProperties;
       setSelectedFylke(fylkeProperties);
       overlay.setPosition(e.coordinate);
     }

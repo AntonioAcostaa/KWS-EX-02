@@ -13,7 +13,6 @@ import { map, MapContext } from "../map/mapContext";
 import { FylkeLayerCheckbox } from "../fylke/fylkeLayerCheckbox";
 import { FylkeASide } from "../fylke/fylkeASide";
 
-
 export function MapApplication() {
   const [layers, setLayers] = useState<Layer[]>([
     new TileLayer({ source: new OSM() }),

@@ -56,7 +56,7 @@ function useKommuneFeatures() {
   useEffect(() => {
     map.getView().on("change", handleViewChange);
     setTimeout(() => {
-        handleViewChange();
+      handleViewChange();
     }, 1000);
     return () => map.getView().un("change", handleViewChange);
   }, [map]);

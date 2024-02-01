@@ -22,10 +22,8 @@ interface KommuneProperties {
   navn: { sprak: string; navn: string }[];
 }
 
-export function KommuneLayerCheckbox({
-}: {
-}) {
-    const { map, setLayers } = useContext(MapContext);
+export function KommuneLayerCheckbox({}: {}) {
+  const { map, setLayers } = useContext(MapContext);
 
   function handleClick(e: MapBrowserEvent<MouseEvent>) {
     const clickedKommune = kommuneLayer
