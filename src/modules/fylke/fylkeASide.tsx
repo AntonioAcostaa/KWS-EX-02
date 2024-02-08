@@ -36,9 +36,9 @@ function useFylkeFeatures() {
     map.getView().getViewStateAndExtent().extent,
   );
 
-    const { visibleFeatures } = useVectorFeatures<FylkeFeature>(
-      (l) => l.getClassName() === "fylker",
-    );
+  const { visibleFeatures } = useVectorFeatures<FylkeFeature>(
+    (l) => l.getClassName() === "fylker",
+  );
 
   function handleSourceChange() {
     setFeatures(layer?.getSource()?.getFeatures());

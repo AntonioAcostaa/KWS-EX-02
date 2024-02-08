@@ -44,7 +44,7 @@ export function FylkeLayerCheckbox() {
         button
         onChange={(e) => setChecked(e.target.checked)}
         label="Fylker"
-        />
+      />
     </div>
   );
 }

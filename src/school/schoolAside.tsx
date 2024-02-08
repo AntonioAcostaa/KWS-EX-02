@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { activeSchoolStyle, SchoolFeature } from "./schoolFeature";
 

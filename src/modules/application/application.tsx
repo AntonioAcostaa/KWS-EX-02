@@ -14,8 +14,7 @@ import { FylkeASide } from "../fylke/fylkeASide";
 import { KommuneAside } from "../kommune/kommuneASide";
 
 import { SchoolLayerCheckbox } from "../../school/schoolLayerCheckbox";
-import { SchoolAside } from "../../school/schoolASide";
-
+import { SchoolAside } from "../../school/schoolAside";
 
 export function Application() {
   const [layers, setLayers] = useState<Layer[]>([

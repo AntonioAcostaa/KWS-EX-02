@@ -26,7 +26,7 @@ export function SchoolLayerCheckbox() {
         button
         onChange={(e) => setChecked(e.target.checked)}
         label="Schools"
-        />
+      />
     </div>
   );
 }

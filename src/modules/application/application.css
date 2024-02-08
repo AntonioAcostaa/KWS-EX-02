@@ -44,9 +44,9 @@ main aside > * {
 }
 
 main aside ul {
-    cursor: pointer;
-  }
-  
+  cursor: pointer;
+}
+
 main aside li.active {
   font-weight: bold;
 }

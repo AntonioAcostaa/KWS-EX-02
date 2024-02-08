@@ -25,7 +25,7 @@ export function KommuneLayerCheckbox() {
         button
         onChange={(e) => setChecked(e.target.checked)}
         label="Kommuner"
-        />
+      />
     </div>
   );
 }
