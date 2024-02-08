@@ -19,35 +19,6 @@ header {
   padding-right: 10px;
 }
 
-.kommune-layer-checkbox {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.kommune-overlay {
-  translate: -50% calc(-50% - 20px);
-  border: 3px solid #0df2d7;
-  border-radius: 7px;
-  background-color: #0f2033;
-  padding: 0.5em;
-  color: white;
-}
-
-.focus-button {
-  background-color: #0f2033;
-  border: 3px solid #0df2d7;
-  border-radius: 7px;
-  color: white;
-  cursor: pointer;
-}
-
-.focus-button:hover {
-  background-color: #0df2d7;
-  border: 3px solid #0f2033;
-  color: #0f2033;
-}
-
 main {
   display: grid;
   grid-template-columns: 1fr auto auto;
@@ -70,4 +41,12 @@ main aside.visible {
 main aside > * {
   padding: 0.5rem;
   min-width: 25ch;
+}
+
+main aside ul {
+    cursor: pointer;
+  }
+  
+main aside li.active {
+  font-weight: bold;
 }

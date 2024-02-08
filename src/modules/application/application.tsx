@@ -8,12 +8,16 @@ import "ol/ol.css";
 import { KommuneLayerCheckbox } from "../kommune/kommuneLayerCheckbox";
 import { Layer } from "ol/layer";
 import { Button } from "@intility/bifrost-react";
-import { KommuneASide } from "../kommune/KommuneASide";
 import { map, MapContext } from "../map/mapContext";
 import { FylkeLayerCheckbox } from "../fylke/fylkeLayerCheckbox";
 import { FylkeASide } from "../fylke/fylkeASide";
+import { KommuneAside } from "../kommune/kommuneASide";
 
-export function MapApplication() {
+import { SchoolLayerCheckbox } from "../../school/schoolLayerCheckbox";
+import { SchoolAside } from "../../school/schoolASide";
+
+
+export function Application() {
   const [layers, setLayers] = useState<Layer[]>([
     new TileLayer({ source: new OSM() }),
   ]);
@@ -35,7 +39,7 @@ export function MapApplication() {
     e.preventDefault();
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
-      map.getView().animate({ center: [longitude, latitude], zoom: 18 });
+      map.getView().animate({ center: [longitude, latitude], zoom: 14 });
     });
   }
 
@@ -47,12 +51,14 @@ export function MapApplication() {
       <nav>
         <KommuneLayerCheckbox />
         <FylkeLayerCheckbox />
+        <SchoolLayerCheckbox />
         <Button onClick={handleFocusUser}>Focus user</Button>
       </nav>
       <main>
         <div ref={mapRef}></div>
-        <KommuneASide />
+        <KommuneAside />
         <FylkeASide />
+        <SchoolAside />
       </main>
     </MapContext.Provider>
   );

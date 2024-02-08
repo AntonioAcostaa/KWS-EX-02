@@ -3,11 +3,12 @@ import { MapContext } from "../map/mapContext";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import { Feature } from "ol";
+import { useVectorFeatures } from "../map/useVectorFeatures";
 
 type FylkeVectorLayer = VectorLayer<VectorSource<FylkeFeature>>;
 
 interface FylkeProperties {
-  fylkenummer: string;
+  fylkesnummer: string;
   navn: Stedsnavn[];
 }
 
@@ -17,7 +18,7 @@ interface Stedsnavn {
   navn: string;
 }
 
-type FylkeFeature = {
+export type FylkeFeature = {
   getProperties(): FylkeProperties;
 } & Feature;
 
@@ -34,11 +35,10 @@ function useFylkeFeatures() {
   const [viewExtent, setViewExtent] = useState(
     map.getView().getViewStateAndExtent().extent,
   );
-  const visibleFeatures = useMemo(
-    () =>
-      features?.filter((f) => f.getGeometry()?.intersectsExtent(viewExtent)),
-    [features, viewExtent],
-  );
+
+    const { visibleFeatures } = useVectorFeatures<FylkeFeature>(
+      (l) => l.getClassName() === "fylker",
+    );
 
   function handleSourceChange() {
     setFeatures(layer?.getSource()?.getFeatures());

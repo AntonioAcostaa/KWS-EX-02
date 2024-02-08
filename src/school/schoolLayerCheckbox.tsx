@@ -2,21 +2,22 @@ import React, { useState } from "react";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import { GeoJSON } from "ol/format";
-import { useLayer } from "../map/useLayer";
+import { schoolStyle } from "./schoolFeature";
+import { useLayer } from "../modules/map/useLayer";
 import { Checkbox } from "@intility/bifrost-react";
 
-const kommuneLayer = new VectorLayer({
-  className: "kommuner",
+const schoolLayer = new VectorLayer({
   source: new VectorSource({
-    url: "/KWS-EX-02/kommuner.json",
+    url: "/KWS-EX-02/schools.json",
     format: new GeoJSON(),
   }),
+  style: schoolStyle,
+  className: "schools",
 });
 
-export function KommuneLayerCheckbox() {
+export function SchoolLayerCheckbox() {
   const [checked, setChecked] = useState(false);
-  useLayer(kommuneLayer, checked);
-
+  useLayer(schoolLayer, checked);
   return (
     <div>
       <Checkbox
@@ -24,7 +25,7 @@ export function KommuneLayerCheckbox() {
         type="switch"
         button
         onChange={(e) => setChecked(e.target.checked)}
-        label="Kommuner"
+        label="Schools"
         />
     </div>
   );
