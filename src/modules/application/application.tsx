@@ -23,6 +23,7 @@ import { SchoolLayerCheckbox } from "../../school/schoolLayerCheckbox";
 import { SchoolAside } from "../../school/schoolAside";
 import { View } from "ol";
 import { BaseLayerDropdown } from "../baseLayer/baseLayerDropdown";
+import { TilfluktsromLayerCheckbox } from "../tilfluktsrom/tilfluktsromCheckbox";
 
 export function Application() {
   //Focuses the map on the user
@@ -76,6 +77,7 @@ export function Application() {
         <KommuneLayerCheckbox />
         <FylkeLayerCheckbox />
         <SchoolLayerCheckbox />
+        <TilfluktsromLayerCheckbox />
       </nav>
       <main>
         <div ref={mapRef}></div>
