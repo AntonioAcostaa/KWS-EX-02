@@ -73,7 +73,9 @@ export function FylkeASide() {
         <h2>Kommuner</h2>
         <ul>
           {visibleFeatures?.map((k) => (
-            <li>{getStedsnavn(k.getProperties().navn)}</li>
+            <li key={k.getProperties().fylkesnummer}>
+              {getStedsnavn(k.getProperties().navn)}
+            </li>
           ))}
         </ul>
       </div>
