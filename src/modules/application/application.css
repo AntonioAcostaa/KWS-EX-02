@@ -1,0 +1,52 @@
+* {
+  margin: unset;
+  color: white;
+}
+
+#root {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  height: 100dvh;
+}
+
+nav,
+header {
+  padding: 0.25em;
+  display: flex;
+  gap: 20px;
+  background-color: #243242;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  background-color: #243242;
+}
+
+main aside {
+  display: grid;
+  grid-template-columns: 0;
+  transition: grid-template-columns 0.5s ease-in-out;
+  overflow-x: clip;
+  max-height: calc(200vh - 100px);
+  overflow-y: auto;
+}
+
+main aside.visible {
+  grid-template-columns: auto;
+}
+
+main aside > * {
+  padding: 0.5rem;
+  min-width: 25ch;
+}
+
+main aside ul {
+  cursor: pointer;
+}
+
+main aside li.active {
+  font-weight: bold;
+}
