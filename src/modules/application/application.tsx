@@ -28,6 +28,7 @@ import { SivilforsvarsdistrikterLayerCheckbox } from "../sivilforsvarsdistrikter
 import { VannkraftverkLayerCheckbox } from "../vannkraftverk/vannkraftverkCheckbox";
 import { JernbaneLinjerLayerCheckbox } from "../jernbanelinjer/jernbaneLinjerCheckbox";
 import { FylkeASide } from "../fylke/fylkeASide";
+import TrainLayerCheckbox from "../tog/trainCheckbox";
 
 export function Application() {
   //Focuses the map on the user
@@ -87,6 +88,7 @@ export function Application() {
             <JernbaneLinjerLayerCheckbox />
             <VannkraftverkLayerCheckbox />
             <SivilforsvarsdistrikterLayerCheckbox />
+            <TrainLayerCheckbox />
           </div>
         </Accordion.Item>
       </Accordion>

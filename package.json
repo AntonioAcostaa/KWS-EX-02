@@ -15,10 +15,15 @@
     "check": "prettier --check . && tsc --noEmit"
   },
   "dependencies": {
+    "@apollo/client": "^3.9.5",
     "@intility/bifrost-react": "^3.12.0",
+    "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0",
+    "graphql-subscriptions": "^2.0.0",
     "ol": "^8.2.0",
     "proj4": "^2.10.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "subscriptions-transport-ws": "^0.11.0"
   }
 }
