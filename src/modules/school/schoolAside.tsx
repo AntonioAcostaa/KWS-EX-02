@@ -6,8 +6,8 @@ import VectorSource from "ol/source/Vector";
 import { Layer } from "ol/layer";
 import { MapBrowserEvent } from "ol";
 import { FeatureLike } from "ol/Feature";
-import { MapContext } from "../modules/map/mapContext";
-import { useVectorFeatures } from "../modules/map/useVectorFeatures";
+import { MapContext } from "../map/mapContext";
+import { useVectorFeatures } from "../map/useVectorFeatures";
 
 function useClosestFeature(layerSelector: (l: Layer) => boolean) {
   const { map, layers } = useContext(MapContext);
@@ -20,9 +20,13 @@ function useClosestFeature(layerSelector: (l: Layer) => boolean) {
   >();
 
   function handlePointerMove(e: MapBrowserEvent<MouseEvent>) {
+    const resolution = map.getView().getResolution();
+    if (!resolution || resolution > 100) {
+      return;
+    }
     const features: FeatureLike[] = [];
     map.forEachFeatureAtPixel(e.pixel, (f) => features.push(f), {
-      hitTolerance: 4,
+      hitTolerance: 5,
       layerFilter: (l) => l === layer,
     });
     if (features.length === 1) {

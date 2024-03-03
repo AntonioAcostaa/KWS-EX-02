@@ -13,9 +13,7 @@ import {
 import { MapContext } from "../map/mapContext";
 import { MapBrowserEvent, Overlay } from "ol";
 import { FeatureLike } from "ol/Feature";
-import RenderFeature from "ol/render/Feature";
 import TilfluktsromModal from "./tilfluktsromModal";
-import { set } from "ol/transform";
 
 const tilfluktsromLayer = new VectorLayer({
   source: new VectorSource({

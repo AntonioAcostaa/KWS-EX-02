@@ -19,8 +19,8 @@ import { FylkeLayerCheckbox } from "../fylke/fylkeLayerCheckbox";
 
 import { KommuneAside } from "../kommune/kommuneASide";
 
-import { SchoolLayerCheckbox } from "../../school/schoolLayerCheckbox";
-import { SchoolAside } from "../../school/schoolAside";
+import { SchoolLayerCheckbox } from "../school/schoolLayerCheckbox";
+import { SchoolAside } from "../school/schoolAside";
 import { View } from "ol";
 import { BaseLayerDropdown } from "../baseLayer/baseLayerDropdown";
 import { TilfluktsromLayerCheckbox } from "../tilfluktsrom/tilfluktsromCheckbox";
