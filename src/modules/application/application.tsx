@@ -13,10 +13,10 @@ import "./application.css";
 import "ol/ol.css";
 import { KommuneLayerCheckbox } from "../kommune/kommuneLayerCheckbox";
 import { Layer } from "ol/layer";
-import { Button } from "@intility/bifrost-react";
+import { Accordion, Button } from "@intility/bifrost-react";
 import { map, MapContext } from "../map/mapContext";
 import { FylkeLayerCheckbox } from "../fylke/fylkeLayerCheckbox";
-import { FylkeASide } from "../fylke/fylkeASide";
+
 import { KommuneAside } from "../kommune/kommuneASide";
 
 import { SchoolLayerCheckbox } from "../../school/schoolLayerCheckbox";
@@ -24,6 +24,10 @@ import { SchoolAside } from "../../school/schoolAside";
 import { View } from "ol";
 import { BaseLayerDropdown } from "../baseLayer/baseLayerDropdown";
 import { TilfluktsromLayerCheckbox } from "../tilfluktsrom/tilfluktsromCheckbox";
+import { SivilforsvarsdistrikterLayerCheckbox } from "../sivilforsvarsdistrikter/sivilforsvarsdistrikterLayerCheckbox";
+import { VannkraftverkLayerCheckbox } from "../vannkraftverk/vannkraftverkCheckbox";
+import { JernbaneLinjerLayerCheckbox } from "../jernbanelinjer/jernbaneLinjerCheckbox";
+import { FylkeASide } from "../fylke/fylkeASide";
 
 export function Application() {
   //Focuses the map on the user
@@ -71,14 +75,21 @@ export function Application() {
       <header>
         <h1>Map Application</h1>
       </header>
-      <nav>
-        <BaseLayerDropdown />
-        <Button onClick={handleFocusUser}>Focus user</Button>
-        <KommuneLayerCheckbox />
-        <FylkeLayerCheckbox />
-        <SchoolLayerCheckbox />
-        <TilfluktsromLayerCheckbox />
-      </nav>
+      <Accordion>
+        <Accordion.Item title="Map settings" className="mapSettingsAccordion">
+          <div className="mapSettingsContainer">
+            <BaseLayerDropdown />
+            <Button onClick={handleFocusUser}>Focus user</Button>
+            <KommuneLayerCheckbox />
+            <FylkeLayerCheckbox />
+            <SchoolLayerCheckbox />
+            <TilfluktsromLayerCheckbox />
+            <JernbaneLinjerLayerCheckbox />
+            <VannkraftverkLayerCheckbox />
+            <SivilforsvarsdistrikterLayerCheckbox />
+          </div>
+        </Accordion.Item>
+      </Accordion>
       <main>
         <div ref={mapRef}></div>
         <KommuneAside />

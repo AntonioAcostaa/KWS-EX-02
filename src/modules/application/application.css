@@ -1,5 +1,8 @@
 * {
   margin: unset;
+}
+
+h1 {
   color: white;
 }
 
@@ -14,7 +17,7 @@ header {
   padding: 0.25em;
   display: flex;
   gap: 20px;
-  background-color: #243242;
+  background-color: #0c1b2d;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -49,4 +52,16 @@ main aside ul {
 
 main aside li.active {
   font-weight: bold;
+}
+
+.mapSettingsContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.mapSettingsAccordion > .bf-accordion-item-title:hover {
+  cursor: pointer;
+  background-color: #243242;
 }

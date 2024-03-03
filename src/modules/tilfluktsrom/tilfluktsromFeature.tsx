@@ -17,18 +17,20 @@ export const tilfluktsromStyle = (feature: FeatureLike) => {
   const tilfluktsrom = feature.getProperties() as tilfluktsromProperties;
   return new Style({
     image: new Circle({
-      radius: 2 + tilfluktsrom.plasser / 150,
-      stroke: new Stroke({ color: "white" }),
+      stroke: new Stroke({ color: "black", width: 1 }),
+      fill: new Fill({ color: "#00f597" }),
+      radius: 3 + tilfluktsrom.plasser / 600,
     }),
   });
 };
 
-export const activeSchoolStyle = (feature: FeatureLike) => {
+export const activeTilfluktsromStyle = (feature: FeatureLike) => {
   const tilfluktsrom = feature.getProperties() as tilfluktsromProperties;
   return new Style({
     image: new Circle({
-      radius: 2 + tilfluktsrom.plasser / 150,
-      stroke: new Stroke({ color: "white", width: 3 }),
+      stroke: new Stroke({ color: "#00f597", width: 3 }),
+      fill: new Fill({ color: "black" }),
+      radius: 3 + tilfluktsrom.plasser / 600,
     }),
     text: new Text({
       text: tilfluktsrom.adresse + " " + tilfluktsrom.romnr,

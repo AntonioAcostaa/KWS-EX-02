@@ -5,6 +5,7 @@ import { Feature } from "ol";
 import { useVectorFeatures } from "../map/useVectorFeatures";
 import { Stroke, Style } from "ol/style";
 import { useActiveFeatures } from "../map/useActiveFeatures";
+import { selectedKommuneStyle } from "./kommuneLayerCheckbox";
 
 type KommuneVectorLayer = VectorLayer<VectorSource<KommuneFeature>>;
 
@@ -38,7 +39,7 @@ export function KommuneAside() {
   const { activeFeatures, setActiveFeatures } =
     useActiveFeatures<KommuneFeature>((l) => l.getClassName() === "kommuner");
   useEffect(() => {
-    activeFeatures.forEach((f) => f.setStyle(activeStyle));
+    activeFeatures.forEach((f) => f.setStyle(selectedKommuneStyle(f)));
     return () => activeFeatures.forEach((f) => f.setStyle(undefined));
   }, [activeFeatures]);
 
