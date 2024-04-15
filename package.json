@@ -12,7 +12,10 @@
     "dev": "vite",
     "build": "npm run check && vite build",
     "prepare": "husky install",
-    "check": "prettier --check . && tsc --noEmit"
+    "check": "prettier --check . && tsc --noEmit",
+    "database:load:kommuner": "docker exec -i /postgis /usr/bin/psql --user postgres norway_data < tmp/Basisdata_0000_Norge_25833_Kommuner_PostGIS.sql",
+    "database:load:eiendommer": "docker exec -i /postgis /usr/bin/psql --user postgres norway_data < tmp/Basisdata_03_Oslo_25832_MatrikkelenAdresse_PostGIS.sql"
+
   },
   "dependencies": {
     "@apollo/client": "^3.9.5",

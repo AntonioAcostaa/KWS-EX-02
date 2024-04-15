@@ -32,7 +32,7 @@ function getStedsnavn(navn: Stedsnavn[]): string | undefined {
 const kommuneLayer = new VectorLayer({
   className: "kommuner",
   source: new VectorSource({
-    url: "/KWS-EX-02/kommuner.json",
+    url: "/api/kommuner",
     format: new GeoJSON(),
   }),
   style: defaultKommuneStyle,
