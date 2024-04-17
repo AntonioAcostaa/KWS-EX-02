@@ -12,6 +12,7 @@ export interface TrainProperties {
     lineRef: string;
   };
   lastUpdated: string;
+  vehicleId: string;
   location: {
     latitude: number;
     longitude: number;

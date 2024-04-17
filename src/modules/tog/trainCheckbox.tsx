@@ -30,6 +30,7 @@ import { SubscriptionClient } from "subscriptions-transport-ws";
 import { useSubscription } from "@apollo/client";
 import { Subscription } from "zen-observable-ts";
 import { Geometry } from "ol/geom";
+import TrainVendorSelect from "./trainVendorSelect";
 
 // Create an http link:
 const httpLink = new HttpLink({
@@ -67,13 +68,14 @@ const client = new ApolloClient({
 });
 
 // Define your subscription
-const VEHICLES_SUBSCRIPTION = gql`
-  subscription {
-    vehicles(codespaceId: "NSB") {
+const VEHICLES_QUERY = gql`
+  query Vehicles($codespaceId: String!) {
+    vehicles(codespaceId: $codespaceId) {
       line {
         lineRef
       }
       lastUpdated
+      vehicleId
       location {
         latitude
         longitude
@@ -86,21 +88,24 @@ const VEHICLES_SUBSCRIPTION = gql`
   }
 `;
 
-const VEHICLES_QUERY = `
-{
-  vehicles(codespaceId:"NSB") {
-    line {lineRef}
-    lastUpdated
-    location {
-      latitude
-      longitude
+const VEHICLES_SUBSCRIPTION = gql`
+  subscription Vehicles($codespaceId: String!) {
+    vehicles(codespaceId: $codespaceId) {
+      line {
+        lineRef
+      }
+      lastUpdated
+      vehicleId
+      location {
+        latitude
+        longitude
+      }
+      vehicleStatus
+      delay
+      speed
+      bearing
     }
-    vehicleStatus
-    delay
-    speed
-    bearing
   }
-}
 `;
 
 const trainLayer = new VectorLayer({
@@ -117,9 +122,14 @@ export function TrainLayerCheckbox() {
   const [activeFeature, setActiveFeature] = useState<TrainFeature>();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedFeature, setSelectedFeature] = useState<TrainFeature>();
-
-  const fetchTrains = () => {
-    request("https://api.entur.io/realtime/v1/vehicles/graphql", VEHICLES_QUERY)
+  const [codespaceId, setCodespaceId] = useState<string>("NSB"); // Add type assertion
+  const validCodespaceId = codespaceId ?? "NSB";
+  const fetchTrains = (codespaceId?: string) => {
+    request(
+      "https://api.entur.io/realtime/v1/vehicles/graphql",
+      VEHICLES_QUERY,
+      { codespaceId: codespaceId ?? validCodespaceId },
+    )
       .then((data: any) => {
         const features: ol.Feature[] = (
           data as { vehicles: TrainProperties[] }
@@ -130,7 +140,7 @@ export function TrainLayerCheckbox() {
               vehicle.location.latitude,
             ]),
           });
-          feature.setId(vehicle.line.lineRef); // Set the ID here
+          feature.setId(vehicle.vehicleId); // Set the ID here
           feature.setProperties(vehicle);
           return feature;
         });
@@ -140,13 +150,14 @@ export function TrainLayerCheckbox() {
         if (trainLayer) {
           const source = trainLayer.getSource();
           if (source) {
-            features.forEach((feature) => {
-              const id = feature.getId() as string | number; // Add type assertion here
+            features.forEach((feature: Feature<Geometry>) => {
+              const id = feature.getId() as string | number; // Add type assertion
               const existingFeature = source.getFeatureById(
                 id,
               ) as Feature<Geometry>;
               if (existingFeature) {
-                existingFeature.setProperties(feature.getProperties());
+                existingFeature.setGeometry(feature.getGeometry()); // Update the geometry
+                existingFeature.setProperties(feature.getProperties()); // Update the properties
               } else {
                 source.addFeature(feature);
               }
@@ -207,25 +218,28 @@ export function TrainLayerCheckbox() {
                   vehicle.location.latitude,
                 ]),
               });
-              feature.setId(vehicle.line.lineRef); // Set the ID here
-              feature.setProperties({
-                lineRef: vehicle.line.lineRef,
-                lastUpdated: vehicle.lastUpdated,
-                vehicleStatus: vehicle.vehicleStatus,
-                delay: vehicle.delay,
-                speed: vehicle.speed,
-                bearing: vehicle.bearing,
-              });
+              feature.setId(vehicle.vehicleId); // Set the ID here
+              if (vehicle.line && vehicle.line.lineRef) {
+                feature.setProperties({
+                  lineRef: vehicle.line.lineRef,
+                  lastUpdated: vehicle.lastUpdated,
+                  vehicleStatus: vehicle.vehicleStatus,
+                  delay: vehicle.delay,
+                  speed: vehicle.speed,
+                  bearing: vehicle.bearing,
+                });
+              }
+              console.log("Train location updated!");
               return feature;
             });
             if (trainLayer) {
               const source = trainLayer.getSource();
               if (source) {
                 features.forEach((feature: Feature<Geometry>) => {
-                  const id = feature.getId() as string | number;
+                  const id = feature.getId() as string | number; // Add type assertion
                   const existingFeature = source.getFeatureById(
                     id,
-                  ) as Feature<Geometry>; // Narrow down the type to Feature<Geometry>
+                  ) as Feature<Geometry>;
                   if (existingFeature) {
                     existingFeature.setGeometry(feature.getGeometry()); // Update the geometry
                     existingFeature.setProperties(feature.getProperties()); // Update the properties
@@ -258,10 +272,23 @@ export function TrainLayerCheckbox() {
     }
   }, [checked, map]);
 
+  useEffect(() => {
+    if (checked) {
+      // Clear the previous trains
+      const source = trainLayer.getSource();
+      if (source) {
+        source.clear();
+      }
+
+      // Fetch the new trains
+      fetchTrains(codespaceId);
+    }
+  }, [checked, codespaceId]);
+
   useLayer(trainLayer, checked);
 
   return (
-    <div>
+    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
       <Checkbox
         checked={checked}
         type="switch"
@@ -269,6 +296,12 @@ export function TrainLayerCheckbox() {
         onChange={(e) => setChecked(e.target.checked)}
         label="Vy trains (live)"
       />
+      {checked && (
+        <TrainVendorSelect
+          codespaceId={codespaceId}
+          setCodespaceId={setCodespaceId}
+        />
+      )}
     </div>
   );
 }
